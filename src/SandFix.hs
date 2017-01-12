@@ -77,9 +77,8 @@ fixPackageIndex globalPkgIndices sandboxRPT brokenPackageIndex
           (a : _) -> a
       fixedImportDirs <- mapM findOneOrFail $ I.importDirs info
       fixedLibDirs <- mapM findOneOrFail $ I.libraryDirs info
-      fixedLibDynDirs <- mapM findOneOrFail $ I.libraryDynDirs info
+      fixedLibDynDirs <- Right []
       fixedIncludeDirs <- mapM findOneOrFail $ I.includeDirs info
-      fixedDataDir <- findOneOrFail $ I.dataDir info
       let fixedFrameworkDirs = findFirstOrRoot <$> I.frameworkDirs info
           fixedHaddockIfaces = findFirstOrRoot <$> I.haddockInterfaces info
           fixedHaddockHTMLs =  findFirstOrRoot <$> I.haddockHTMLs info
@@ -94,7 +93,6 @@ fixPackageIndex globalPkgIndices sandboxRPT brokenPackageIndex
            , I.frameworkDirs = fixedFrameworkDirs
            , I.haddockInterfaces = fixedHaddockIfaces
            , I.haddockHTMLs = fixedHaddockHTMLs
-           , I.dataDir = fixedDataDir
            })
 
 findDBs :: FilePath -> Maybe String -> IO [FilePath]
